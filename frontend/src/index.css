@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #050816;
+    color: #F8FAFC;
+    transition-property: color, background-color;
+    transition-duration: 300ms;
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  body.dark {
+    background-color: #050816;
+    color: #F8FAFC;
+  }
+}
+
+/* Aurora Growth Theme Utilities */
+.aurora-bg {
+  background-color: #050816;
+}
+
+.aurora-card-bg {
+  background-color: #0B1026;
+}
+
+.aurora-secondary-bg {
+  background-color: #0B1026;
+}
+
+.aurora-gradient-text {
+  background: linear-gradient(135deg, #00D4FF 0%, #8B5CF6 50%, #14F195 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.aurora-gradient-bg {
+  background: linear-gradient(135deg, #00D4FF 0%, #8B5CF6 50%, #14F195 100%);
+}
+
+.aurora-glass-card {
+  background: rgba(11, 16, 38, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.aurora-glass-card:hover {
+  border-color: rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
