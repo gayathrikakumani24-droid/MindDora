@@ -1,4 +1,6 @@
 # 🧠 MindDora – AI Smart Diary & Personal Growth Companion
+  ✨ Live Demo: https://mind-dora.vercel.app/
+  
 <img width="1366" height="639" alt="Screenshot (406)" src="https://github.com/user-attachments/assets/c3105ded-63f3-4f22-8b83-5ac95108107b" />
 
 MindDora is an AI-powered journaling and self-improvement platform that helps users transform daily thoughts into meaningful insights. It combines intelligent journaling, emotional analysis, habit tracking, goal management, memory retrieval, and personalized AI mentorship into a single growth ecosystem.It automatically tracks Goals and Habit Management from Diary Entries.
@@ -7,7 +9,7 @@ MindDora is an AI-powered journaling and self-improvement platform that helps us
 
 ### 📖 Smart Journaling
 - Create and manage daily journal entries
-- Rich text support with image attachments
+- Rich text support with image attachments using Cloudinary
 - Secure cloud-based storage
 <img width="1366" height="641" alt="Screenshot (422)" src="https://github.com/user-attachments/assets/8b342409-1e01-49fb-97ae-9ff417ece363" />
 
@@ -21,7 +23,7 @@ MindDora is an AI-powered journaling and self-improvement platform that helps us
 ### 🧠 Memory Search (RAG)
 - Retrieve past memories using natural language
 - Ask questions about previous experiences
-- AI-powered semantic search using vector embeddings
+- AI-powered semantic search using vector embeddings (MongoDB Atlas vector search)
   <img width="1366" height="631" alt="Screenshot (424)" src="https://github.com/user-attachments/assets/0472a499-5874-45c8-b9d7-2cdf1b2e3cfd" />
 
 ### 🎯 Goal Management
@@ -148,9 +150,6 @@ MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_secret_key
 
 GEMINI_API_KEY=your_gemini_api_key
-
-PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_INDEX=your_index_name
 
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
