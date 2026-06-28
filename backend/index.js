@@ -32,10 +32,21 @@ app.use('/api/habits', require('./routes/habit.routes'));
 app.use('/api/chat', require('./routes/chat.routes'));
 app.use('/api/analytics', require('./routes/analytics.routes'));
 
+// Root API endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to MindDora AI Companion API',
+    health: '/health',
+    docs: 'API mounted under /api',
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'MindDora Server is running' });
 });
+
 
 // Central Error Handler Middleware
 app.use((err, req, res, next) => {
