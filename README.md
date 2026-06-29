@@ -74,7 +74,7 @@ MindDora is an AI-powered journaling and self-improvement platform that helps us
 ### AI & Intelligence
 - Google Gemini API
 - Gemini Embeddings
-- Pinecone Vector Database
+- MongoDB Atlas Vector Database
 - Retrieval-Augmented Generation (RAG)
 
 ### Additional Services
@@ -115,7 +115,7 @@ MindDora/
 1. User writes a journal entry.
 2. AI analyzes emotions and extracts insights.
 3. Entry is stored in MongoDB.
-4. Embeddings are generated and stored in Pinecone.
+4. Embeddings are generated and stored in MongoDB Atlas Vector Database.
 5. Habits and goals are automatically updated.
 6. AI mentors provide personalized recommendations.
 7. Users can query past memories using natural language.
@@ -129,7 +129,7 @@ MindDora/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/MindDora.git
+git clone https://github.com/gayathrikakumani24-droid/MindDora.git
 cd MindDora
 ```
 
