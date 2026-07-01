@@ -124,10 +124,11 @@ const Dashboard = () => {
           </div>
           <h3 className="text-base font-bold text-slate-200">Your Companion is empty</h3>
           <p className="text-xs text-slate-400 max-w-xs mx-auto">
+            Set your Goals,Habits! 
             Write your first journal entry to kick off your emotional analytics, habit checking, and goal metrics tracking!
           </p>
           <a
-            href="/entry/new"
+            href="entry/new"
             className="inline-block rounded-xl bg-gradient-to-r from-[#00D4FF] to-[#8B5CF6] px-5 py-2.5 text-xs font-extrabold text-white shadow-lg transition-all active:scale-95"
           >
             Create First Entry
