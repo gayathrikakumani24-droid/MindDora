@@ -17,6 +17,8 @@ import {
   HelpCircle,
   X,
   Maximize2,
+  Mic,
+  MicOff,
 } from 'lucide-react';
 
 const EntryEditor = () => {
@@ -43,6 +45,75 @@ const EntryEditor = () => {
   const [habitFeedback, setHabitFeedback] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
 
+  // Voice Input States & Ref
+  const [isListening, setIsListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const recognitionRef = React.useRef(null);
+
+  // Check browser support and cleanup on unmount
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      setSpeechSupported(true);
+    }
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
+  const toggleListening = () => {
+    if (!speechSupported) return;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
+    } else {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.lang = navigator.language || 'en-US';
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event) => {
+        let finalTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          }
+        }
+        if (finalTranscript) {
+          setContent((prev) => {
+            const needsSpace = prev.length > 0 && !prev.endsWith(' ') && !prev.endsWith('\n');
+            return prev + (needsSpace ? ' ' : '') + finalTranscript;
+          });
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+          alert('Microphone permission is required for voice journaling. Please enable it in your browser settings.');
+        }
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    }
+  };
 
   useEffect(() => {
     if (isEditMode) {
@@ -254,6 +325,69 @@ const EntryEditor = () => {
 
           {/* Content Area */}
           <div className="rounded-3xl border border-slate-800/80 bg-[#0B1026]/80 p-6 shadow-xl backdrop-blur-xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800/50 pb-3 mb-2">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Diary Narrative</span>
+              
+              <div className="flex items-center gap-3">
+                <AnimatePresence>
+                  {isListening && (
+                    <motion.div 
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#14F195] font-semibold bg-[#14F195]/5 px-2.5 py-1 rounded-lg border border-[#14F195]/20 animate-pulse"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#14F195]"></span>
+                      <span>Listening... Speak now</span>
+                      {/* Premium Sound wave animation using Framer Motion */}
+                      <div className="flex gap-0.5 items-end h-3 ml-1">
+                        {[0.1, 0.3, 0.2].map((delay, index) => (
+                          <motion.div
+                            key={index}
+                            className="w-0.5 bg-[#14F195] rounded-full"
+                            animate={{
+                              height: ["4px", "12px", "4px"]
+                            }}
+                            transition={{
+                              duration: 0.8,
+                              repeat: Infinity,
+                              delay: delay,
+                              ease: "easeInOut"
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  title={!speechSupported ? "Speech recognition not supported in this browser" : isListening ? "Stop voice input" : "Start voice input"}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-extrabold transition-all duration-200 ${
+                    !speechSupported
+                      ? 'border border-slate-800 bg-slate-900/40 text-slate-500 cursor-not-allowed'
+                      : isListening
+                      ? 'bg-gradient-to-r from-rose-500 to-red-600 text-white animate-pulse shadow-lg shadow-rose-500/20 active:scale-95'
+                      : 'border border-slate-800 bg-[#050816] text-[#00D4FF] hover:bg-[#00D4FF]/10 hover:border-[#00D4FF]/40 active:scale-95'
+                  }`}
+                >
+                  {isListening ? (
+                    <>
+                      <MicOff className="h-3.5 w-3.5 text-white" />
+                      <span>Stop Voice</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="h-3.5 w-3.5" />
+                      <span>Voice Input</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
             <textarea
               placeholder="What is on your mind today? Write about challenges, achievements, coding tasks, workouts, or reflections..."
               value={content}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import API from '../services/api';
@@ -127,12 +128,12 @@ const Dashboard = () => {
             Set your Goals,Habits! 
             Write your first journal entry to kick off your emotional analytics, habit checking, and goal metrics tracking!
           </p>
-          <a
-            href="entry/new"
+          <Link
+            to="/entry/new"
             className="inline-block rounded-xl bg-gradient-to-r from-[#00D4FF] to-[#8B5CF6] px-5 py-2.5 text-xs font-extrabold text-white shadow-lg transition-all active:scale-95"
           >
             Create First Entry
-          </a>
+          </Link>
         </div>
       ) : (
         <>
